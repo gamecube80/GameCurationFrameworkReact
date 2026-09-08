@@ -1,0 +1,6 @@
+@GameCurationFrameworkReact.Server_HostAddress = http://localhost:5189
+
+GET {{GameCurationFrameworkReact.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

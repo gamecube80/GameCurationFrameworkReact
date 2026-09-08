@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="gamecurationframeworkreact.client/gamecurationframeworkreact.client.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+  <Project Path="GameCurationFrameworkReact.Server/GameCurationFrameworkReact.Server.csproj" />
+</Solution>
