@@ -1,4 +1,4 @@
-﻿namespace GameCurationFramework.Model {
+﻿namespace GameCurationFrameworkReact.Server.Model {
     public class Tag {
         public string Id { get; set; } = "";
 

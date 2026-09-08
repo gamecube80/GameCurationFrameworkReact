@@ -1,5 +1,5 @@
-﻿using GameCurationFramework.Model;
-using GameCurationFrameworkReact.Server.Helpers;
+﻿using GameCurationFrameworkReact.Server.Helpers;
+using GameCurationFrameworkReact.Server.Model;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameCurationFrameworkReact.Server.Controllers {
@@ -9,8 +9,9 @@ namespace GameCurationFrameworkReact.Server.Controllers {
         private readonly GameDataService _gameDataService = gameDataService;
 
         [HttpGet]
-        public async Task<List<Tag>> GetTags() {
-            return await _gameDataService.GetTagsAsync();
+        public async Task<ActionResult<List<Tag>>> GetTags() {
+            var tags = await _gameDataService.GetTagsAsync();
+            return Ok(tags);
         }
 
     }

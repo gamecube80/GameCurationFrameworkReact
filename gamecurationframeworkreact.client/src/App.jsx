@@ -2,12 +2,7 @@ import './App.css'
 import React from 'react'
 
 function App() {
-    React.useEffect(() => {
-        fetch("/api/tags")
-            .then(response => response.json())
-            .then(data => setTags(data))
-    }, [])
-
+    const [tags, setTags] = React.useState([])
     const [rolledTags, setRolledTags] = React.useState([])
 
     const games = [
@@ -34,13 +29,17 @@ function App() {
         }
     ]
 
-    function rollTags() {
-        function rollTags() {
-            const names = tags.map(tag => tag.name)
-            const shuffled = shuffle(names)
+    React.useEffect(() => {
+        fetch("/api/tags")
+            .then(response => response.json())
+            .then(data => setTags(data))
+    }, [])
 
-            setRolledTags(shuffled.slice(0, 3))
-        }
+    function rollTags() {
+        const names = tags.map(tag => tag.name)
+        const shuffled = shuffle(names)
+
+        setRolledTags(shuffled.slice(0, 3))
     }
 
     function shuffle(array) {
@@ -58,7 +57,9 @@ function App() {
     }
 
     function rerollTag(tag) {
-        const availableTags = tags.filter(x => !rolledTags.includes(x))
+        const availableTags = tags
+            .map(x => x.name)
+            .filter(name => !rolledTags.includes(name))
 
         const replacement =
             availableTags[Math.floor(Math.random() * availableTags.length)]

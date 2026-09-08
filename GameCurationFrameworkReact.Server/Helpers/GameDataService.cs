@@ -1,4 +1,4 @@
-﻿using GameCurationFramework.Model;
+﻿using GameCurationFrameworkReact.Server.Model;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -63,7 +63,7 @@ namespace GameCurationFrameworkReact.Server.Helpers {
 
             games = [];
 
-            while(iterator.HasMoreResults) {
+            while (iterator.HasMoreResults) {
                 var response = await iterator.ReadNextAsync();
                 games.AddRange(response);
             }
