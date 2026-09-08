@@ -47,6 +47,7 @@ function App() {
             .filter(name => !rolledTags.includes(name))
 
         const replacement =
+            // eslint-disable-next-line react-hooks/purity
             availableTags[Math.floor(Math.random() * availableTags.length)]
 
         setRolledTags(
