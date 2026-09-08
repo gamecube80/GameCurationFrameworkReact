@@ -3,36 +3,21 @@ import React from 'react'
 
 function App() {
     const [tags, setTags] = React.useState([])
+    const [games, setGames] = React.useState([])
     const [rolledTags, setRolledTags] = React.useState([])
-
-    const games = [
-        {
-            id: "game-1",
-            name: "Sample Game 1",
-            price: 19.99,
-            userRating: 8.2,
-            tags: ["Horror", "Dark"]
-        },
-        {
-            id: "game-2",
-            name: "Sample Game 2",
-            price: 29.99,
-            userRating: 7.5,
-            tags: ["Puzzle", "Magic"]
-        },
-        {
-            id: "game-3",
-            name: "Sample Game 3",
-            price: 0,
-            userRating: 9.0,
-            tags: ["FPS", "Horror"]
-        }
-    ]
+    const [sortByTag, setSortByTag] = React.useState([])
+    const [sortDescendingByTag, setSortDescendingByTag] = React.useState([])
 
     React.useEffect(() => {
         fetch("/api/tags")
             .then(response => response.json())
             .then(data => setTags(data))
+    }, [])
+
+    React.useEffect(() => {
+        fetch("/api/games")
+            .then(response => response.json())
+            .then(data => setGames(data))
     }, [])
 
     function rollTags() {
@@ -69,6 +54,33 @@ function App() {
         )
     }
 
+    function sortGames(tag, column) {
+        if (sortByTag[tag] === column) {
+            setSortDescendingByTag({
+                ...sortDescendingByTag,
+                [tag]: !sortDescendingByTag[tag]
+            })
+        }
+        else {
+            setSortByTag({
+                ...sortByTag,
+                [tag]: column
+            })
+
+            setSortDescendingByTag({
+                ...sortDescendingByTag,
+                [tag]: false
+            })
+        }
+    }
+
+    function getSortArrow(tag, column) {
+        if (sortByTag[tag] !== column)
+            return ""
+
+        return sortDescendingByTag[tag] ? "▾" : "▴"
+    }
+
     return (
         <>
             <section>
@@ -95,6 +107,25 @@ function App() {
                     game.tags.includes(tag)
                 )
 
+                const sortedGames = [...matchingGames].sort((a, b) => {
+                    const sortBy = sortByTag[tag]
+                    const descending = sortDescendingByTag[tag] ?? false
+
+                    let comparison = 0
+
+                    if (sortBy === "Name") {
+                        comparison = a.name.localeCompare(b.name)
+                    }
+                    else if (sortBy === "Price") {
+                        comparison = a.price - b.price
+                    }
+                    else if (sortBy === "Rating") {
+                        comparison = (a.userRating ?? 0) - (b.userRating ?? 0)
+                    }
+
+                    return descending ? -comparison : comparison
+                })
+
                 return (
                     <div key={tag}>
                         <div>
@@ -112,18 +143,43 @@ function App() {
                         <table className="gameTable">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Price</th>
-                                    <th>Rating</th>
+                                    <th>Cover</th>
+                                    <th>
+                                        <button
+                                            type="button"
+                                            className="headerButton"
+                                            onClick={() => sortGames(tag, "Name")}>
+                                            Name {getSortArrow(tag, "Name")}
+                                        </button>
+                                    </th>
+                                    <th>
+                                        <button
+                                            type="button"
+                                            className="headerButton"
+                                            onClick={() => sortGames(tag, "Price")}>
+                                            Price {getSortArrow(tag, "Price")}
+                                        </button>
+                                    </th>
+                                    <th>
+                                        <button
+                                            type="button"
+                                            className="headerButton"
+                                            onClick={() => sortGames(tag, "Rating")}>
+                                            Rating {getSortArrow(tag, "Rating")}
+                                        </button>
+                                    </th>
+                                    <th>Tags</th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                {matchingGames.map(game => (
+                                {sortedGames.map(game => (
                                     <tr key={game.id}>
+                                        <td><img src={game.coverArtUrl} /></td>
                                         <td>{game.name}</td>
                                         <td>${game.price.toFixed(2)}</td>
                                         <td>{game.userRating ?? "N/A"}</td>
+                                        <td>{[...game.tags].sort().join(", ")}</td>
                                     </tr>
                                 ))}
                             </tbody>
