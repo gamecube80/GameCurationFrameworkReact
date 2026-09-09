@@ -168,7 +168,7 @@
     border-collapse: collapse;
     margin-top: 10px;
     margin-bottom: 25px;
-    min-width: 500px;
+    width: 100%;
 }
 
     .gameTable th,
@@ -202,4 +202,11 @@
     align-items: center;
     gap: 5px;
     white-space: nowrap;
+}
+
+.navTabs {
+    display: flex;
+    gap: 5px;
+    margin: 10px;
+    margin-left: 5px;
 }
