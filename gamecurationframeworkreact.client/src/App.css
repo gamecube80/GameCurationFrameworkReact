@@ -210,3 +210,42 @@
     margin: 10px;
     margin-left: 5px;
 }
+
+.historyGameGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.historyGameCard {
+    border: 1px solid #555;
+    padding: 16px;
+}
+
+    .historyGameCard > * {
+        margin: 0;
+    }
+
+.historyGameImage {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+}
+
+.historyGameCard h3 {
+    padding: 14px 0;
+    border-bottom: 1px solid #444;
+}
+
+.historyGameCard .price,
+.historyGameCard .rating,
+.historyGameCard .tags,
+.historyGameCard .completed {
+    padding: 12px 0;
+    border-bottom: 1px solid #444;
+}
+
+    .historyGameCard .completed:last-child {
+        border-bottom: none;
+    }

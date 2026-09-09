@@ -9,6 +9,7 @@ namespace GameCurationFrameworkReact.Server.Helpers {
 
         private const string TagsCacheKey = "all-tags";
         private const string GamesCacheKey = "all-games";
+        private const string HistoryCacheKey = "all-history";
 
         public GameDataService(
             CosmosClient cosmosClient,
@@ -63,7 +64,7 @@ namespace GameCurationFrameworkReact.Server.Helpers {
 
             games = [];
 
-            while (iterator.HasMoreResults) {
+            while(iterator.HasMoreResults) {
                 var response = await iterator.ReadNextAsync();
                 games.AddRange(response);
             }
@@ -74,6 +75,32 @@ namespace GameCurationFrameworkReact.Server.Helpers {
                 TimeSpan.FromMinutes(30));
 
             return games;
+        }
+
+        public async Task<List<History>> GetHistoryAsync() {
+            if(_cache.TryGetValue("history", out List<History>? history)) {
+                return history!;
+            }
+
+            var query = new QueryDefinition(
+                "SELECT * FROM c WHERE c.type = @type")
+                .WithParameter("@type", "history");
+            var iterator = _container.GetItemQueryIterator<History>(query);
+
+            history = [];
+
+            while(iterator.HasMoreResults) {
+                var response = await iterator.ReadNextAsync();
+                history.AddRange(response);
+            }
+
+            _cache.Set(
+                HistoryCacheKey,
+                history,
+                TimeSpan.FromMinutes(30));
+
+            return history;
+
         }
 
     }
