@@ -164,6 +164,13 @@
     }
 }
 
+.navTabs {
+    display: flex;
+    gap: 5px;
+    margin: 10px;
+    margin-left: 5px;
+}
+
 .gameTable {
     border-collapse: collapse;
     margin-top: 10px;
@@ -202,13 +209,6 @@
     align-items: center;
     gap: 5px;
     white-space: nowrap;
-}
-
-.navTabs {
-    display: flex;
-    gap: 5px;
-    margin: 10px;
-    margin-left: 5px;
 }
 
 .historyGameGrid {
