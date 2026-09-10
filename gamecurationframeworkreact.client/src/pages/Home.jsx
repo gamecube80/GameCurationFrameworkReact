@@ -179,7 +179,22 @@ function Home() {
                                         <td>{game.name}</td>
                                         <td>${game.price.toFixed(2)}</td>
                                         <td>{game.userRating ?? "N/A"}</td>
-                                        <td>{[...game.tags].sort().join(", ")}</td>
+                                        <td>
+                                            {[...game.tags].sort().map((tag, index, tags) => (
+                                                <React.Fragment key={tag}>
+                                                    {tag.split("/").map((part, partIndex, parts) => (
+                                                        <React.Fragment key={partIndex}>
+                                                            {part}
+                                                            {partIndex < parts.length - 1 && (
+                                                                <>/<wbr /></>
+                                                            )}
+                                                        </React.Fragment>
+                                                    ))}
+
+                                                    {index < tags.length - 1 && ", "}
+                                                </React.Fragment>
+                                            ))}
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>

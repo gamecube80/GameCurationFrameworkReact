@@ -44,22 +44,22 @@ function History() {
                 <section className="historyMonth" key={month.id}>
                     <h2>{getMonthName(month.month)} {month.year}</h2>
 
-                        <div className="historyGameGrid">
-                            {month.games.map((historyGame) => {
-                                const game = games.find(g => g.id === historyGame.gameId)
+                    <div className="historyGameGrid">
+                        {month.games.map((historyGame) => {
+                            const game = games.find(g => g.id === historyGame.gameId)
 
-                                if (!game)
-                                    return null
+                            if (!game)
+                                return null
 
-                                return (
-                                    <div className="historyGameCard" key={historyGame.gameId}>
-                                        <img
-                                            src={game.coverArtUrl}
-                                            alt={game.name}
-                                            className="historyGameImage"
-                                        />
+                            return (
+                                <div className="historyGameCard" key={historyGame.gameId}>
+                                    <img
+                                        src={game.coverArtUrl}
+                                        alt={game.name}
+                                        className="historyGameImage"
+                                    />
 
-                                        <div className="historyGameContent">
+                                    <div className="historyGameContent">
                                         <h3>{game.name}</h3>
 
                                         <div className="price">
@@ -78,14 +78,14 @@ function History() {
                                             <div className="completed">
                                                 ✓ 100% Completed
                                             </div>
-                                            )}
-                                        </div>
+                                        )}
                                     </div>
-                                )
-                            })}
-                        </div>
-                    </section>
-                ))}
+                                </div>
+                            )
+                        })}
+                    </div>
+                </section>
+            ))}
 
         </>
     )
