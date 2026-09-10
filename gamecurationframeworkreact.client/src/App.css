@@ -171,6 +171,16 @@
     margin-left: 5px;
 }
 
+.tagHeader {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+}
+
+    .tagHeader h2 {
+        margin: 0;
+    }
+
 .gameTable {
     border-collapse: collapse;
     margin-top: 10px;

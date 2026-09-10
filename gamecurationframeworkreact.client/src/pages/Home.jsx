@@ -128,8 +128,8 @@ function Home() {
 
                 return (
                     <div key={tag}>
-                        <div>
-                            {tag}
+                        <div className="tagHeader">
+                            <h2>{tag}</h2>
                             <button
                                 type="button"
                                 className="rollTags"
